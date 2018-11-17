@@ -4,7 +4,7 @@ import {
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
-import { addPlayer, startGame, resetPlayers } from '../../actions';
+import { addPlayer, resetPlayers } from '../../actions';
 import { ComponentUtils } from '../../utils';
 import { PLAYER_TYPE } from '../../globals';
 import { Menu } from '../../components';
@@ -14,14 +14,12 @@ class Main extends Component {
   
   static defaultProps = {
     addPlayer: () => {},
-    startGame: () => {},
     resetPlayers: () => {}
   }
 
   play = (isHuman) => {
-    const { addPlayer, startGame, resetPlayers } = this.props;
+    const { addPlayer, resetPlayers } = this.props;
 
-    startGame();
     resetPlayers();
 
     addPlayer();
@@ -58,7 +56,6 @@ const styles = theme => ({
 const mapDispatchToProps = (dispatch) => {
   return {
     addPlayer: (options) => dispatch(addPlayer(options)),
-    startGame: () => dispatch(startGame()),
     resetPlayers: () => dispatch(resetPlayers())
   }
 };

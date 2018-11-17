@@ -10,25 +10,14 @@ import classnames from 'classnames';
 import { Redirect } from 'react-router-dom';
 
 import { PlayGround, StatusBar, Results } from '../../components';
-import { ComponentUtils } from '../../utils';
+import { ComponentUtils, GameUtils } from '../../utils';
 import { PLAYER_STATUS } from '../../globals';
-import { GameUtils } from '../../utils';
-import { endGame } from '../../actions';
-
 
 class Game extends Component {
   static defaultProps = {
     players: [],
     current: 0,
-    ended: false,
-    endGame: () => {}
-  }
-
-  componentDidUpdate() {
-    const { ended, endGame } = this.props;
-    if (ended) {
-      endGame();
-    }
+    ended: false
   }
 
   render() {
@@ -121,10 +110,4 @@ const mapStateToProps = (state) => {
   };
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    endGame: () => dispatch(endGame())
-  }
-};
-
-export default ComponentUtils.create(Game, styles, { stateToProps: mapStateToProps, dispatchToProps: mapDispatchToProps }, true);
+export default ComponentUtils.create(Game, styles, { stateToProps: mapStateToProps }, true);

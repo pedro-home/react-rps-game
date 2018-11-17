@@ -44,7 +44,7 @@ const playerReducer = makeReducer({
       // Update Player
       state[id] = { ...player, move: move === PLAYER_MOVE.RANDOM ? PlayerUtils.getRandomMove() : move, status: PLAYER_STATUS.ENDED };
 
-      if (!PlayerUtils.isEndedTurn(state)) {
+      if (!PlayerUtils.isEndedRound(state)) {
         const nextId = id + 1;
         const nextPlayer = PlayerUtils.getPlayerById(state, nextId);
 
@@ -54,7 +54,7 @@ const playerReducer = makeReducer({
       }
 
       // Every player ended their turn => Let the blood bash begin!
-      const results = PlayerUtils.getMoveResults(state);
+      const results = PlayerUtils.getRoundResults(state);
 
       return state.map((player, index) => {
         let { life, ...rest } = player;

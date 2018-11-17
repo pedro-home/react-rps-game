@@ -5,7 +5,7 @@ class PlayerUtils {
     return players[id];
   }
 
-  static isEndedTurn(players) {
+  static isEndedRound(players) {
     return players.length === players.filter((player) => player.status === PLAYER_STATUS.ENDED).length;
   }
 
@@ -13,7 +13,8 @@ class PlayerUtils {
     const arr = Object.keys(PLAYER_MOVE);
 
     // Remove RANDOM move
-    const name = arr[Math.floor(Math.random() * (arr.length - 1))];
+    arr.splice(arr.findIndex((val) => val === 'RANDOM'), 1);
+    const name = arr[Math.floor(Math.random() * arr.length)];
     return PLAYER_MOVE[name];
   }
 
@@ -24,7 +25,7 @@ class PlayerUtils {
   /**
    * TODO: Searching pattern needs to be improved (low performance)
    */
-  static getMoveResults(players) {
+  static getRoundResults(players) {
     const results = players.slice();
 
     // Compare each player's move
