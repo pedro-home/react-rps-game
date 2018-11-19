@@ -1,35 +1,32 @@
 # Welcome
 
+This application simulates the game Rock, Paper, Scissors
 
-## Technologies
-- create-react-app
-- react
-- javascript
-- scss
+## Main Technologies
+- React
+- React Redux
+- React Router
+- Jest
 
 ## Available Scripts
 
-In the project directory, you can run:
+To start the application, execute
+```
+npm run run-app
+```
 
-### `npm start`
+To test the application, execute
+```
+npm test
+```
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## TODOs
+- Apply validation to each TextField on Menu page
+- Show every turn results of the current game at the Results component
+- Support of multiple humans and AIs - For the correct test case, use only 2 humans or 1 human and 1 AI
+- Add unit tests on pages, reducers and actions
+- Support of game options - Number of rounds, Time per round
+- Support of multiplayer game mode (socket io)
+- Create UI Custom Theme
+- Create an high fidelity mockup
+- Re-style components and pages to be more game related, using the high fidelity design
