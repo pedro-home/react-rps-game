@@ -5,8 +5,10 @@ class PlayerUtils {
     return players[id];
   }
 
-  static isEndedRound(players) {
-    return players.length === players.filter((player) => player.status === PLAYER_STATUS.ENDED).length;
+  static isEndedTurn(players) {
+    const numberPlayersAlive = players.filter((player) => player.status !== PLAYER_STATUS.DEAD).length;
+    const numberPlayersEnded = players.filter((player) => player.status === PLAYER_STATUS.ENDED).length
+    return numberPlayersAlive === numberPlayersEnded;
   }
 
   static getRandomMove() {
@@ -25,7 +27,7 @@ class PlayerUtils {
   /**
    * TODO: Searching pattern needs to be improved (low performance)
    */
-  static getRoundResults(players) {
+  static getTurnResults(players) {
     const results = players.slice();
 
     // Compare each player's move

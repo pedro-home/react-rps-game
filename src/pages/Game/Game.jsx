@@ -23,7 +23,7 @@ class Game extends Component {
   render() {
     const { classes, numberPlayers, ended, current } = this.props;
 
-    if (numberPlayers < 2) {
+    if (numberPlayers !== 2) {
       // No Players found!
       return (<Redirect to="/"/>);
     }
