@@ -88,7 +88,7 @@ describe('Render', () => {
     });
 
     it('Should reverse <LinearProgress /> order', () => {
-      expect(component.find('LinearProgress').prop('classes')['bar']).toContain('invertedProgress');
+      expect(component.find('LinearProgress').prop('classes')['bar']).toContain('inverted');
     });
   });
 });
