@@ -3,10 +3,14 @@ import {
   Button,
   TextField,
   InputAdornment,
-  Icon
+  Icon,
+  Snackbar,
+  SnackbarContent
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import amber from '@material-ui/core/colors/amber';
+import classnames from 'classnames';
 
 import { addPlayer, resetPlayers } from '../../actions';
 import { ComponentUtils } from '../../utils';
@@ -17,6 +21,14 @@ const styles = {
   root: {
     width: '100vw',
     height: '100vh'
+  },
+  snackbarContent: {
+    backgroundColor: amber[700]
+  },
+  messageIcon: {
+    verticalAlign: 'middle',
+    width: 'auto',
+    marginRight: '.5rem'
   }
 };
 
@@ -75,8 +87,9 @@ class Main extends Component {
   onChange = (humans) => {
     const event = window.event;
     if (event && event.target) {
+      const value = event.target.value;
       let obj = {};
-      obj[humans ? 'numberHumans' : 'numberAIs'] = parseInt(event.target.value, 10);
+      obj[humans ? 'numberHumans' : 'numberAIs'] = value === '' ? 0 : Math.max(0, parseInt(value, 10));
 
       this.setState(obj);
     }
@@ -93,13 +106,12 @@ class Main extends Component {
             <TextField 
               label="Number of Humans"
               required
-              defaultValue={numberHumans}
+              value={numberHumans}
               type="Number"
               margin="normal"
               fullWidth
               onInput={this.onChange.bind(this, true)}
               classes={{ root: classes.item }}
-              helperText="Keep total of players = 2"
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -111,13 +123,12 @@ class Main extends Component {
             <TextField
               label="Number of AIs"
               required
-              defaultValue={numberAIs}
+              value={numberAIs}
               type="Number"
               margin="normal"
               fullWidth
               onInput={this.onChange.bind(this, false)}
               classes={{ root: classes.item }}
-              helperText="Keep total of players = 2"
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -131,6 +142,19 @@ class Main extends Component {
             </Link>
           </form>
         </Menu>
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          open={true}
+        >
+          <SnackbarContent
+            classes={{ root: classes.snackbarContent }}
+            message={<><Icon fontSize="small" classes={{ root: classnames('fas', 'fa-exclamation-triangle', classes.messageIcon) }} />Temporary Warning: Keep total of players = 2</>}
+          />
+        </Snackbar>
+          
       </div>
     );
   }

@@ -16,7 +16,11 @@ const styles = theme => ({
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    padding: '1rem'
+    padding: '1rem',
+
+    '&:focus': {
+      outline: 'none'
+    }
   },
   box: {
     width: '400px',
