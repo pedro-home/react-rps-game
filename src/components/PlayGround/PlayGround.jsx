@@ -9,12 +9,28 @@ import {
   CardHeader
 } from '@material-ui/core';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 
 import { PLAYER_MOVE, PLAYER_STATUS, PLAYER_TYPE } from '../../globals';
 import { endTurnPlayer, startTurnPlayer } from '../../actions';
 import { ComponentUtils, PlayerUtils } from '../../utils';
 
 class PlayGround extends Component {
+  static propTypes = {
+    playerId: PropTypes.number.isRequired,
+    classes: PropTypes.object.isRequired,
+    status: PropTypes.oneOf([
+      PLAYER_STATUS.PLAYING,
+      PLAYER_STATUS.WAITING,
+      PLAYER_STATUS.ENDED,
+      PLAYER_STATUS.DEAD]),
+    type: PropTypes.oneOf([
+      PLAYER_TYPE.HUMAN,
+      PLAYER_TYPE.AI]),
+    startTurn: PropTypes.func,
+    endTurn: PropTypes.func
+  }
+
   static defaultProps = {
     startTurn: () => {},
     endTurn: () => {}
@@ -42,7 +58,7 @@ class PlayGround extends Component {
 
   render() {
     return (
-      <Grid container direction="column" alignItems="center" justify="center" spacing={32}>
+      <Grid name="grid" container direction="column" alignItems="center" justify="center" spacing={32}>
         <Grid container item justify="center" spacing={32}>
           {this.renderCards()}
         </Grid>
@@ -58,19 +74,11 @@ class PlayGround extends Component {
       return (
         <Grid item key={`item-${playerMove.name}`}>
           <Zoom in={true}>
-            <Card
-              raised
-              classes={{
-                root: classnames(
-                  classes.card,
-                  { [classes.cardWaiting]: status !== PLAYER_STATUS.PLAYING }
-                ) 
-              }}
-            >
+            <Card raised classes={{ root: classes.card }}>
               <CardHeader title={playerMove.name} titleTypographyProps={{ align: 'center', variant: 'body1' }} />
               <CardActionArea disabled={status !== PLAYER_STATUS.PLAYING} classes={{ root: classes.cardAction }} onClick={() => this.onClickChoose(playerMove) }>
                 <CardContent>
-                  <Icon classes={{ root: classnames(playerMove.icon, classes.cardIcon) }}></Icon>
+                  <Icon classes={{ root: classnames(playerMove.icon, classes.cardIcon) }} />
                 </CardContent>
               </CardActionArea>
             </Card>
@@ -87,16 +95,10 @@ const styles = {
   card: {
     '& $cardIcon': {
       fontSize: '120px'
-    },
-
-    '&$cardWaiting': {
-      opacity: 0.5,
-      pointerEvents: 'none'
     }
   },
   cardIcon: { },
-  cardAction: { },
-  cardWaiting: { }
+  cardAction: { }
 };
 
 const mapStateToProps = (state, ownProps) => {
