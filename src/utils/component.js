@@ -8,6 +8,13 @@ import { MemoryRouter } from 'react-router';
 import { createMount } from '@material-ui/core/test-utils';
 
 class ComponentUtils {
+  /**
+   * Create a Generic, Connected, Routed and/or Styled Component
+   * @param {*} Component 
+   * @param {*} styles 
+   * @param {*} connection 
+   * @param {*} routing 
+   */
   static create(Component, styles, connection, routing) {
     if (!styles && !connection && !routing) {
       return Component;
@@ -31,6 +38,13 @@ class ComponentUtils {
     return compose(...arrFn)(Component);
   }
 
+  /**
+   * Create a Generic, Connected, Routed and/or Styled Component for testing
+   * @param {*} Component 
+   * @param {*} rootSelector 
+   * @param {*} initState 
+   * @param {*} initEntries 
+   */
   static createMockup(Component, rootSelector, initState, initEntries) {
     if (!initState && !initEntries) {
       return (createMount())(Component);

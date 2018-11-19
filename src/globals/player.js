@@ -1,3 +1,10 @@
+/**
+ * Player status
+ * - PLAYING - It's player's turn
+ * - WAITING - Player is waiting for his turn
+ * - ENDED - Player finished his turn
+ * - DEAD - Player is dead
+ */
 export const PLAYER_STATUS = {
   PLAYING: {
     name: 'PLAYING'
@@ -14,6 +21,11 @@ export const PLAYER_STATUS = {
   }
 }
 
+/**
+ * Player type
+ * - HUMAN - User (hint: you and me!)
+ * - AI - Computer (hint: not you and me!)
+ */
 export const PLAYER_TYPE = {
   HUMAN: {
     name: 'HUMAN',
@@ -25,6 +37,13 @@ export const PLAYER_TYPE = {
   }
 }
 
+/**
+ * Player move
+ * - ROCK - Use the power of Rock to defeat the mighty Scissors
+ * - PAPER - Use the power of Paper to defeat the mighty Rock
+ * - SCISSORS - Use the power of Scissors to defeat the mighty Paper
+ * - RANDOM - " I'm feeling lucky! " - Google Search
+ */
 export const PLAYER_MOVE = {
   ROCK: {
     name: 'ROCK',

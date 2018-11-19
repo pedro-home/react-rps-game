@@ -9,6 +9,13 @@ import { ComponentUtils } from '../../utils';
 import { PLAYER_STATUS } from '../../globals';
 import { Menu } from '..';
 
+
+const mapStateToProps = (state) => {
+  return {
+    winner: state.players.find((player) => player.status !== PLAYER_STATUS.DEAD)
+  }
+}
+
 class Results extends Component {
   static propTypes = {
     winner: PropTypes.object.isRequired
@@ -26,12 +33,6 @@ class Results extends Component {
     );
   }
     
-}
-
-const mapStateToProps = (state) => {
-  return {
-    winner: state.players.find((player) => player.status !== PLAYER_STATUS.DEAD)
-  }
 }
 
 export default ComponentUtils.create(Results, undefined, { stateToProps: mapStateToProps }, true);

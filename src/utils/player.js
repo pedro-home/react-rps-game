@@ -1,16 +1,28 @@
 import { PLAYER_STATUS, PLAYER_MOVE } from '../globals';
 
 class PlayerUtils {
+  /**
+   * Get player object by its id
+   * @param {*} players 
+   * @param {*} id 
+   */
   static getPlayerById(players, id) {
     return players[id];
   }
 
+  /**
+   * Check if turn has ended
+   * @param {*} players 
+   */
   static isEndedTurn(players) {
     const numberPlayersAlive = players.filter((player) => player.status !== PLAYER_STATUS.DEAD).length;
     const numberPlayersEnded = players.filter((player) => player.status === PLAYER_STATUS.ENDED).length
     return numberPlayersAlive === numberPlayersEnded;
   }
 
+  /**
+   * Get a random move
+   */
   static getRandomMove() {
     const arr = Object.keys(PLAYER_MOVE);
 
@@ -20,12 +32,19 @@ class PlayerUtils {
     return PLAYER_MOVE[name];
   }
 
+  /**
+   * Check if move1 wins, looses or draws against move2
+   * @param {*} move1 
+   * @param {*} move2 
+   */
   static compareMoves(move1, move2) {
     return move1.results[move2.name];
   }
 
   /**
+   * Get results from all matched moves in that turn
    * TODO: Searching pattern needs to be improved (low performance)
+   * @param {*} players 
    */
   static getTurnResults(players) {
     const results = players.slice();

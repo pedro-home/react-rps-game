@@ -19,6 +19,8 @@ const playerReducer = makeReducer({
       return [...initState];
     },
     [addPlayer.TYPE]: (state, { payload={} }) => {
+
+      // A new Player is born and ready for the GAME SHOW
       payload = { ...initPlayerState,  ...payload };
 
       let { name, type, status, ...rest } = payload;
@@ -28,6 +30,8 @@ const playerReducer = makeReducer({
       return [...state, { type: type, name: name, status: PLAYER_STATUS.WAITING, ...rest }];
     },
     [startTurnPlayer.TYPE]: (state, { payload }) => {
+
+      // First turn belongs to this player
       const { id } = payload;
       const { life } = initPlayerState;
 
@@ -58,12 +62,16 @@ const playerReducer = makeReducer({
 
       return state.map((player, index) => {
         let { life, ...rest } = player;
-        life += results[index] * 100;
+
+        // TODO: Life decrease should be a game configuration => number of rounds
+        life += results[index] * 25;
 
         return { ...rest, life: life, status: life > 0 ? (index === 0 ? PLAYER_STATUS.PLAYING : PLAYER_STATUS.WAITING) : PLAYER_STATUS.DEAD };
       });
     },
     [continueTurnPlayer.TYPE]: (state, { payload={} }) => {
+     
+      // A new turn has been added to this player
       const { id } = payload;
 
       const player = PlayerUtils.getPlayerById(state, id);

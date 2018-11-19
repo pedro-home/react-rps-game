@@ -6,14 +6,33 @@ import {
   Icon
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import { addPlayer, resetPlayers } from '../../actions';
 import { ComponentUtils } from '../../utils';
 import { PLAYER_TYPE } from '../../globals';
 import { Menu } from '../../components';
 
+const styles = {
+  root: {
+    width: '100vw',
+    height: '100vh'
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addPlayer: (options) => dispatch(addPlayer(options)),
+    resetPlayers: () => dispatch(resetPlayers())
+  }
+};
 
 class Main extends Component {
+
+  static propTypes = {
+    addPlayer: PropTypes.func,
+    resetPlayers: PropTypes.func
+  }
   
   static defaultProps = {
     addPlayer: () => {},
@@ -116,19 +135,5 @@ class Main extends Component {
     );
   }
 }
-
-const styles = theme => ({
-  root: {
-    width: '100vw',
-    height: '100vh'
-  }
-});
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addPlayer: (options) => dispatch(addPlayer(options)),
-    resetPlayers: () => dispatch(resetPlayers())
-  }
-};
 
 export default ComponentUtils.create(Main, styles, { dispatchToProps: mapDispatchToProps }, true);

@@ -8,14 +8,54 @@ import {
 } from '@material-ui/core';
 import classnames from 'classnames';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import { PlayGround, StatusBar, Results } from '../../components';
 import { ComponentUtils, GameUtils } from '../../utils';
 import { PLAYER_STATUS } from '../../globals';
 
+const styles = {
+  header: {
+    boxShadow: 'none'
+  },
+  main: {
+    position: 'absolute',
+    top: '64px',
+    bottom: '20px',
+    left: 0,
+    right: 0,
+    overflow: 'hidden auto',
+    padding: '2rem'
+  },
+  footer: {
+    position: 'fixed',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    padding: '0 .5rem'
+  }
+};
+
+const mapStateToProps = (state) => {
+  const index = state.players.findIndex((player) => player.status === PLAYER_STATUS.PLAYING);
+  const ended = GameUtils.isEndedGame(state.players);
+  return {
+    numberPlayers: state.players.length,
+    ended: ended,
+    current: index > -1 ? index : 0
+  };
+}
+
 class Game extends Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    numberPlayers: PropTypes.number,
+    current: PropTypes.number,
+    ended: PropTypes.bool
+  }
+
   static defaultProps = {
-    players: [],
+    numberPlayers: 0,
     current: 0,
     ended: false
   }
@@ -24,7 +64,7 @@ class Game extends Component {
     const { classes, numberPlayers, ended, current } = this.props;
 
     if (numberPlayers !== 2) {
-      // No Players found!
+      // This is not a match!
       return (<Redirect to="/"/>);
     }
 
@@ -75,39 +115,6 @@ class Game extends Component {
       </>
     );
   }
-}
-
-const styles = {
-  header: {
-    boxShadow: 'none'
-  },
-  main: {
-    position: 'absolute',
-    top: '64px',
-    bottom: '20px',
-    left: 0,
-    right: 0,
-    overflow: 'hidden auto',
-    padding: '2rem'
-  },
-  footer: {
-    position: 'fixed',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    padding: '0 .5rem'
-  }
-};
-
-const mapStateToProps = (state) => {
-  const index = state.players.findIndex((player) => player.status === PLAYER_STATUS.PLAYING);
-  const ended = GameUtils.isEndedGame(state.players);
-  return {
-    numberPlayers: state.players.length,
-    ended: ended,
-    current: index > -1 ? index : 0,
-    ...state.game
-  };
 }
 
 export default ComponentUtils.create(Game, styles, { stateToProps: mapStateToProps }, true);

@@ -13,16 +13,24 @@ import { ComponentUtils, PlayerUtils } from '../../utils';
 import { PLAYER_STATUS, PLAYER_TYPE } from '../../globals';
 
 
-const styles = {
+const styles = theme => ({
   progress: {
     transformOrigin: 'left',
 
-    '&$invertedProgress': {
+    '&$inverted': {
       transformOrigin: 'right'
     }
   },
-  invertedProgress: { }
-};
+  avatar: {
+    '&$selected': {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.primary.contrastText
+    }
+  },
+  selected: { },
+  inverted: { }
+
+});
 
 const mapStateToProps = (state, ownProps) => {
   const player = PlayerUtils.getPlayerById(state.players, ownProps.playerId);
@@ -41,7 +49,6 @@ class StatusBar extends Component {
     playerId: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     classes: PropTypes.object.isRequired,
-    life: PropTypes.number.isRequired,
     status: PropTypes.oneOf([
       PLAYER_STATUS.PLAYING,
       PLAYER_STATUS.WAITING,
@@ -50,14 +57,13 @@ class StatusBar extends Component {
     type: PropTypes.oneOf([
       PLAYER_TYPE.HUMAN,
       PLAYER_TYPE.AI]).isRequired,
+    life: PropTypes.number,
     inverted: PropTypes.bool
   }
 
   static defaultProps = {
     inverted: false,
-    life: 0,
-    status: {},
-    type: {}
+    life: 0
   }
 
   render() {
@@ -66,13 +72,13 @@ class StatusBar extends Component {
     return (
       <Grid name="grid" container direction={ inverted ? 'row-reverse' : 'row' } spacing={24}>
         <Grid item>
-          <Avatar>
+          <Avatar classes={{ root: classnames(classes.avatar, {[classes.selected]: status === PLAYER_STATUS.PLAYING ? true : false }) }}>
             <Icon classes={{ root: status.icon || type.icon }}/>
           </Avatar>
         </Grid>
         <Grid item container xs direction="column" justify="center">
           <Grid item>
-            <LinearProgress variant="determinate" value={life} classes={{ bar: classnames(classes.progress, {[classes.invertedProgress]: inverted} ) }} />
+            <LinearProgress variant="determinate" value={life} classes={{ bar: classnames(classes.progress, {[classes.inverted]: inverted} ) }} />
           </Grid>
           <Grid name="status" item container direction={ inverted ? 'row-reverse' : 'row' }>
             <Grid item xs>
